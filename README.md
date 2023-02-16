@@ -72,5 +72,5 @@ AWS Custom VPC Creation steps
 
 
 
-For query - raja.n@northeastern.edu
+For query reach out to raja.n@northeastern.edu
 
