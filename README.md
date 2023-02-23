@@ -2,7 +2,7 @@
 
 INTRODUCTION
 
-Configuration creates set of VPC, internet gateway and Route tables resources in Dev and Demo environment.
+Configuration  creates set of VPC, internet gateway and Route tables resources in Dev and Demo environment.
 
 USAGE
 
