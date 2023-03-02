@@ -1,8 +1,47 @@
 # aws-infra
 
-INTRODUCTION
+Prerequisites
+Before starting this project, you will need to have the following installed:
 
-Configuration  creates set of VPC, internet gateway and Route tables resources in Dev and Demo environment.
+Visual Studio Code or any other IDE
+POSTMAN
+MySQL or any other database management system
+Node.js
+AWS account
+
+Terraform
+
+Steps
+Create a Node.js and MYSQL2 Webapp with RESTful APIs to perform CRUD operations on users and products.
+Create a .sh file with the necessary dependencies, including Node.js and Mariadb. The commands in the .sh file should include unzipping the Webapp.zip file, installing nginx, and enabling and starting webapp and nginx services.
+Configure your MySQL database and connect it to your Webapp.
+Test your Webapp locally to make sure it is functioning correctly.
+Create a Packer file to build the new AMI, including the source AMI to build from, a provisioner section to run the shell script file created in step 2, and a builders section to create the new AMI.
+Run the Packer build command to create the new AMI.
+Use Terraform to create a new EC2 instance from the AMI created in step 6.
+Obtain the public IP address of the EC2 instance and test the APIs using POSTMAN.
+After testing, create a pull request with a detailed description of changes.
+Store the Image details in the RDS and meta data in S3 for future use.
+API Endpoints
+The Webapp includes the following endpoints for performing operations on users and products:
+
+GET
+POST
+PUT
+PATCH
+DELETE
+HTTP messages that can be received include:
+
+"200 OK"
+"201 Created"
+"204 No Content"
+"400 Bad Request"
+"401 Unauthenticated"
+"403 Forbidden"
+"500 Internal Server Error"
+
+Conclusion
+By following these steps, you can create an AMI for a Node.js and MYSQL2 Webapp and use it to run API tests with POSTMAN. With Terraform, you can easily create an EC2 instance from the AMI, and store the Image details in RDS and meta data in S3 for future use.
 
 USAGE
 
