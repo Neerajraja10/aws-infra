@@ -93,10 +93,11 @@ variable "db_name" {
 variable "db_port" {
   default = 3306
 }
+
 variable "zone_id" {
-  type    = string
+  type = string
 }
 
 variable "create_record_name_dns" {
-  type    = string
+  type = string
 }
