@@ -35,3 +35,16 @@ resource "aws_instance" "app_server" {
 
   subnet_id = var.subnet_ids[0]
 }
+
+data "aws_route53_zone" "hosted_zone" {
+   name = var.create_record_name_dns
+   private_zone = false
+}
+
+resource "aws_route53_record" "record_creation" {
+  zone_id =  data.aws_route53_zone.hosted_zone.zone_id
+  name    =  var.create_record_name_dns
+  type    = "A"
+  ttl     = 60
+  records = [aws_instance.app_server.public_ip]
+}
