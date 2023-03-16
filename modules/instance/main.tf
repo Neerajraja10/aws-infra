@@ -37,13 +37,13 @@ resource "aws_instance" "app_server" {
 }
 
 data "aws_route53_zone" "hosted_zone" {
-   name = var.create_record_name_dns
-   private_zone = false
+  name         = var.create_record_name_dns
+  private_zone = false
 }
 
 resource "aws_route53_record" "record_creation" {
-  zone_id =  data.aws_route53_zone.hosted_zone.zone_id
-  name    =  var.create_record_name_dns
+  zone_id = data.aws_route53_zone.hosted_zone.zone_id
+  name    = var.create_record_name_dns
   type    = "A"
   ttl     = 60
   records = [aws_instance.app_server.public_ip]
