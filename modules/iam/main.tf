@@ -62,3 +62,13 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 output "ec2_profile_name" {
   value = aws_iam_instance_profile.ec2_profile.name
 }
+
+data "aws_iam_policy" "codedeploy_service_policy" {
+  arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
+
+
+resource "aws_iam_role_policy_attachment" "codedeploy_service_role_policy_attach" {
+  role       = aws_iam_role.iam_role.name
+  policy_arn = data.aws_iam_policy.codedeploy_service_policy.arn
+}
