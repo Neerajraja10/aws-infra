@@ -6,6 +6,7 @@ resource "aws_instance" "app_server" {
   key_name             = var.ami_key_pair_name
   security_groups      = ["${var.sec_id}"]
   iam_instance_profile = var.ec2_profile_name
+  disable_api_termination = true
 
   tags = {
     Name = "EC2-${var.ami_id}"
