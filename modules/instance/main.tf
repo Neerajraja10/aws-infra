@@ -1,11 +1,11 @@
 resource "aws_instance" "app_server" {
   # count = var.subnet_count
 
-  ami                  = var.ami_id
-  instance_type        = var.instance_type
-  key_name             = var.ami_key_pair_name
-  security_groups      = ["${var.sec_id}"]
-  iam_instance_profile = var.ec2_profile_name
+  ami                     = var.ami_id
+  instance_type           = var.instance_type
+  key_name                = var.ami_key_pair_name
+  security_groups         = ["${var.sec_id}"]
+  iam_instance_profile    = var.ec2_profile_name
   disable_api_termination = true
 
   tags = {
