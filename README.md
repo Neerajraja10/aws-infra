@@ -10,7 +10,7 @@ Node.js
 AWS account
 
 Terraform
-
+aws acm import-certificate --certificate fileb://certificate.crt --private-key fileb://private.key --profile=demo
 Steps
 Create a Node.js and MYSQL2 Webapp with RESTful APIs to perform CRUD operations on users and products.
 Create a .sh file with the necessary dependencies, including Node.js and Mariadb. The commands in the .sh file should include unzipping the Webapp.zip file, installing nginx, and enabling and starting webapp and nginx services.
