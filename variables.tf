@@ -101,3 +101,7 @@ variable "zone_id" {
 variable "create_record_name_dns" {
   type = string
 }
+
+variable "rec_name" {
+  type = string
+}
