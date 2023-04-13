@@ -25,69 +25,69 @@ resource "aws_kms_key_policy" "example" {
         "Sid" : "Allow access for Key Administrators",
         "Effect" : "Allow",
         "Principal" : {
-        "AWS" : [
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing",
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-        ]
+          "AWS" : [
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing",
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+          ]
+        },
+        "Action" : [
+          "kms:Create*",
+          "kms:Describe*",
+          "kms:Enable*",
+          "kms:List*",
+          "kms:Put*",
+          "kms:Update*",
+          "kms:Revoke*",
+          "kms:Disable*",
+          "kms:Get*",
+          "kms:Delete*",
+          "kms:TagResource",
+          "kms:UntagResource",
+          "kms:ScheduleKeyDeletion",
+          "kms:CancelKeyDeletion"
+        ],
+        "Resource" : "*"
       },
-      "Action" : [
-        "kms:Create*",
-        "kms:Describe*",
-        "kms:Enable*",
-        "kms:List*",
-        "kms:Put*",
-        "kms:Update*",
-        "kms:Revoke*",
-        "kms:Disable*",
-        "kms:Get*",
-        "kms:Delete*",
-        "kms:TagResource",
-        "kms:UntagResource",
-        "kms:ScheduleKeyDeletion",
-        "kms:CancelKeyDeletion"
-      ],
-      "Resource" : "*"
-    },
-    {
-      "Sid" : "Allow use of the key",
-      "Effect" : "Allow",
-      "Principal" : {
-        "AWS" : [
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing",
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-        ]
+      {
+        "Sid" : "Allow use of the key",
+        "Effect" : "Allow",
+        "Principal" : {
+          "AWS" : [
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing",
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+          ]
+        },
+        "Action" : [
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey*",
+          "kms:DescribeKey"
+        ],
+        "Resource" : "*"
       },
-      "Action" : [
-        "kms:Encrypt",
-        "kms:Decrypt",
-        "kms:ReEncrypt*",
-        "kms:GenerateDataKey*",
-        "kms:DescribeKey"
-      ],
-      "Resource" : "*"
-    },
-    {
-      "Sid" : "Allow attachment of persistent resources",
-      "Effect" : "Allow",
-      "Principal" : {
-        "AWS" : [
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing",
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-        ]
-      },
-      "Action" : [
-        "kms:CreateGrant",
-        "kms:ListGrants",
-        "kms:RevokeGrant"
-      ],
-      "Resource" : "*",
-      "Condition" : {
-        "Bool" : {
-          "kms:GrantIsForAWSResource" : "true"
+      {
+        "Sid" : "Allow attachment of persistent resources",
+        "Effect" : "Allow",
+        "Principal" : {
+          "AWS" : [
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing",
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+          ]
+        },
+        "Action" : [
+          "kms:CreateGrant",
+          "kms:ListGrants",
+          "kms:RevokeGrant"
+        ],
+        "Resource" : "*",
+        "Condition" : {
+          "Bool" : {
+            "kms:GrantIsForAWSResource" : "true"
+          }
         }
       }
-    }
-  ]
+    ]
   })
 }
 
@@ -122,22 +122,22 @@ data "template_file" "user_data" {
 
 }
 
-data "aws_ami" "latest_ami" { 
-  most_recent = true 
-  owners = ["904970591130"] 
-  filter{ 
-    name = "name" 
-    values = ["amiassign*"] 
-  } 
-  filter{ 
-    name = "root-device-type" 
-    values = ["ebs"] 
-  } 
-  
-  filter{ 
-    name = "virtualization-type" 
-    values = ["hvm"] 
-  } 
+data "aws_ami" "latest_ami" {
+  most_recent = true
+  owners      = ["904970591130"]
+  filter {
+    name   = "name"
+    values = ["amiassign*"]
+  }
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
 }
 resource "aws_launch_template" "app_launch_config" {
   user_data     = base64encode(data.template_file.user_data.rendered)
@@ -151,11 +151,11 @@ resource "aws_launch_template" "app_launch_config" {
   }
 
   block_device_mappings {
-    device_name           = "/dev/xvda"
+    device_name = "/dev/xvda"
     ebs {
       delete_on_termination = true
-      encrypted = true
-      kms_key_id = aws_kms_key.kms_key.arn     
+      encrypted             = true
+      kms_key_id            = aws_kms_key.kms_key.arn
     }
   }
 
@@ -190,7 +190,7 @@ resource "aws_lb_listener" "webapp_listener" {
   load_balancer_arn = aws_lb.webapplb.arn
   port              = 443
   protocol          = "HTTPS"
-  ssl_policy = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
 
   default_action {
     type             = "forward"
